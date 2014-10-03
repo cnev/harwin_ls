@@ -18,7 +18,7 @@ int				main(int ac, char **av)
 
 	if ((read_command(ac, av, &info)) == -1)
 		return (1);
-	if ((exec_ls(&info)) == -1)
+	if ((begin_ls(&info)) == -1)
 		return (1);
 	return (0);
 }

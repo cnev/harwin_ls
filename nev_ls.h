@@ -12,13 +12,10 @@
 
 #ifndef LS_H
 # define LS_H
-# include "stdlib.h"
-
-typedef struct		s_queue
-{
-	char			*dir;
-	struct s_queue	*next;
-}					t_queue;
+# include <stdlib.h>
+# include "../includes/fifo.h"
+# define TRUE 		1
+# define FALSE		0
 
 typedef struct		s_ls
 {
@@ -27,7 +24,17 @@ typedef struct		s_ls
 	int				flag_a;
 	int				flag_R;
 	int				flag_t;
-	t_queue			*dirlst;
+	t_fifo			*dirlst;
 }					t_ls;
+
+/*
+** argchecks.c
+*/
+int				read_command(int ac, char **av, t_ls *info);
+
+/*
+** ls.c
+*/
+int				begin_ls(t_ls *info);
 
 #endif

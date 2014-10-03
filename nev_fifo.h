@@ -21,4 +21,7 @@ typedef struct		s_fifo
 	struct s_fifo	*next;
 }					t_fifo;
 
+void			push_fifo(t_fifo **first, void *item);
+t_fifo			*pop_fifo(t_fifo **first);
+
 #endif
