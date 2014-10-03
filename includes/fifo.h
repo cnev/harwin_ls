@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   fifo.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cnev <cnev@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vjung <vjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/10/03 17:41:16 by cnev              #+#    #+#             */
-/*   Updated: 2014/10/03 17:41:17 by cnev             ###   ########.fr       */
+/*   Created: 2014/10/03 18:42:30 by vjung             #+#    #+#             */
+/*   Updated: 2014/10/03 18:42:30 by vjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ls.h"
+#ifndef FIFO_H
+# define FIFO_H
+# include <stdlib.h>
+# include "libft.h"
 
-int				main(int ac, char **av)
+typedef struct		s_fifo
 {
-	t_ls			info;
+	void			*item;
+	struct s_fifo	*next;
+}					t_fifo;
 
-	if ((read_command(ac, av, &info)) == -1)
-		return (1);
-	if ((exec_ls(&info)) == -1)
-		return (1);
-	return (0);
-}
+void				push_fifo(t_fifo **first, void *item);
+t_fifo				*pop_fifo(t_fifo **first);
+
+#endif

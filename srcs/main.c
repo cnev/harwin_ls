@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   nev_argchecks.c                                    :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cnev <cnev@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vjung <vjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/10/03 17:48:57 by cnev              #+#    #+#             */
-/*   Updated: 2014/10/03 17:48:57 by cnev             ###   ########.fr       */
+/*   Created: 2014/10/03 18:44:12 by vjung             #+#    #+#             */
+/*   Updated: 2014/10/03 18:44:12 by vjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ls.h"
 
-int				read_command(int ac, char **av, t_ls *info)
+int				main(int ac, char **av)
 {
-	if (ac == 1)
-		zero_flags(info);
-	else if (ac == 2)
-	{
-		if ((detect_flags(info)) == -1)
-			return (-1);
-	}
-	info->dirlst = NULL;
+	t_ls			info;
+
+	if ((read_command(ac, av, &info)) == -1)
+		return (1);
+	if ((begin_ls(&info)) == -1)
+		return (1);
 	return (0);
 }
