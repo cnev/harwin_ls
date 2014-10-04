@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fifo.h                                             :+:      :+:    :+:   */
+/*   ft_list_clear.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vjung <vjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/10/03 18:42:30 by vjung             #+#    #+#             */
-/*   Updated: 2014/10/03 18:42:30 by vjung            ###   ########.fr       */
+/*   Created: 2014/09/09 17:04:19 by vjung             #+#    #+#             */
+/*   Updated: 2014/09/09 17:04:19 by vjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FIFO_H
-# define FIFO_H
-# include <stdlib.h>
-# include "../libft/includes/libft.h"
+#include "../includes/ft_list.h"
+#include <stdlib.h>
 
-typedef struct		s_fifo
+void			ft_list_clear(t_list **begin_list)
 {
-	void			*item;
-	struct s_fifo	*next;
-}					t_fifo;
+	t_list			*tmp;
+	t_list			*tmp2;
 
-void				push_fifo(t_fifo **first, void *item);
-t_fifo				*pop_fifo(t_fifo **first);
-
-#endif
+	if (*begin_list)
+	{
+		tmp = *begin_list;
+		while (tmp)
+		{
+			tmp2 = tmp->next;
+			free(tmp);
+			tmp = tmp2;
+		}
+		*begin_list = NULL;
+	}
+}

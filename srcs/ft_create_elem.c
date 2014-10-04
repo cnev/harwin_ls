@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fifo.h                                             :+:      :+:    :+:   */
+/*   ft_create_elem.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vjung <vjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/10/03 18:42:30 by vjung             #+#    #+#             */
-/*   Updated: 2014/10/03 18:42:30 by vjung            ###   ########.fr       */
+/*   Created: 2014/09/09 15:29:26 by vjung             #+#    #+#             */
+/*   Updated: 2014/09/09 15:29:27 by vjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FIFO_H
-# define FIFO_H
-# include <stdlib.h>
-# include "../libft/includes/libft.h"
+#include <stdlib.h>
+#include "../includes/ft_list.h"
 
-typedef struct		s_fifo
+t_list			*ft_create_elem(void *data)
 {
-	void			*item;
-	struct s_fifo	*next;
-}					t_fifo;
+	t_list			*elem;
 
-void				push_fifo(t_fifo **first, void *item);
-t_fifo				*pop_fifo(t_fifo **first);
-
-#endif
+	elem = (t_list*)malloc(sizeof(t_list));
+	elem->data = data;
+	elem->next = NULL;
+	return (elem);
+}

@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fifo.h                                             :+:      :+:    :+:   */
+/*   ft_list_push_back.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vjung <vjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/10/03 18:42:30 by vjung             #+#    #+#             */
-/*   Updated: 2014/10/03 18:42:30 by vjung            ###   ########.fr       */
+/*   Created: 2014/09/09 15:43:06 by vjung             #+#    #+#             */
+/*   Updated: 2014/09/09 15:43:07 by vjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FIFO_H
-# define FIFO_H
-# include <stdlib.h>
-# include "../libft/includes/libft.h"
+#include "../includes/ft_list.h"
+t_list			*ft_create_elem(void *data);
 
-typedef struct		s_fifo
+void			ft_list_push_back(t_list **begin_list, void *data)
 {
-	void			*item;
-	struct s_fifo	*next;
-}					t_fifo;
+	t_list			*tmp;
 
-void				push_fifo(t_fifo **first, void *item);
-t_fifo				*pop_fifo(t_fifo **first);
-
-#endif
+	if (!(*begin_list))
+		*begin_list = ft_create_elem(data);
+	else
+	{
+		tmp = *begin_list;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = ft_create_elem(data);
+	}
+}

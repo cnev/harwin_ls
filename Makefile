@@ -3,8 +3,22 @@ CC = gcc -I $(HEADERFOLDER)
 CFLAGS = -Wall -Wextra -Werror -O3
 SRCFOLDER = srcs
 HEADERFOLDER = includes/
-SRC += $(SRCFOLDER)/bsq.c
-
+SRC += $(SRCFOLDER)/argcheck.c
+SRC += $(SRCFOLDER)/display_results.c
+SRC += $(SRCFOLDER)/display_results2.c
+SRC += $(SRCFOLDER)/exec_ls.c
+SRC += $(SRCFOLDER)/fifo.c
+SRC += $(SRCFOLDER)/formats.c
+SRC += $(SRCFOLDER)/ft_create_elem.c
+SRC += $(SRCFOLDER)/ft_list_clear.c
+SRC += $(SRCFOLDER)/ft_list_find.c
+SRC += $(SRCFOLDER)/ft_list_push_back.c
+SRC += $(SRCFOLDER)/ft_list_sort.c
+SRC += $(SRCFOLDER)/ft_list_rsort.c
+SRC += $(SRCFOLDER)/main.c
+SRC += $(SRCFOLDER)/print_l.c
+SRC += $(SRCFOLDER)/print_l2.c
+SRC += $(SRCFOLDER)/recursive_ls.c
 OBJ = $(SRC:%.c=%.o)
 LIB = libft/
 

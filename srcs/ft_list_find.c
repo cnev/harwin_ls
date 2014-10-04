@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fifo.h                                             :+:      :+:    :+:   */
+/*   ft_list_find.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vjung <vjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/10/03 18:42:30 by vjung             #+#    #+#             */
-/*   Updated: 2014/10/03 18:42:30 by vjung            ###   ########.fr       */
+/*   Created: 2014/09/09 19:43:05 by vjung             #+#    #+#             */
+/*   Updated: 2014/09/09 19:43:06 by vjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FIFO_H
-# define FIFO_H
-# include <stdlib.h>
-# include "../libft/includes/libft.h"
+#include "../includes/ft_list.h"
+#include <stddef.h>
 
-typedef struct		s_fifo
+t_list			*ft_list_find(t_list *begin_list, void *data_ref, int (*cmp)())
 {
-	void			*item;
-	struct s_fifo	*next;
-}					t_fifo;
+	t_list			*tmp;
 
-void				push_fifo(t_fifo **first, void *item);
-t_fifo				*pop_fifo(t_fifo **first);
-
-#endif
+	tmp = begin_list;
+	while (tmp)
+	{
+		if ((*cmp)(tmp->data, data_ref) == 0)
+			return (tmp);
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
