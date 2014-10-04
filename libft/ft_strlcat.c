@@ -9,6 +9,7 @@
 /*   Updated: 2013/11/19 18:15:12 by cnev             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 size_t			ft_strlcat(char *dst, const char *src, size_t size)

@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "ft_list.h"
-#include <stddef.h>
 
 static void		ft_swap(t_list **elem1, t_list **elem2)
 {

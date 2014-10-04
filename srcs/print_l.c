@@ -62,7 +62,7 @@ void			print_size(off_t n, int max_size)
 	ft_putchar(' ');
 }
 
-void			print_date(struct stat *sstat)
+void			print_date(struct stat (*sstat))
 {
 	time_t			tps;
 	char			*buf;

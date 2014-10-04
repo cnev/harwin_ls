@@ -9,6 +9,7 @@
 /*   Updated: 2013/11/21 14:47:34 by cnev             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 void	ft_striteri(char *s, void (*f)(unsigned int, char *))

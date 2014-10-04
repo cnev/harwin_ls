@@ -9,6 +9,7 @@
 /*   Updated: 2013/11/24 01:38:28 by cnev             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 t_list		*ft_lstnew(const void *content, size_t content_size)

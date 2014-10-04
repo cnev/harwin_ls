@@ -24,9 +24,10 @@
 # include <time.h>
 # include <pwd.h>
 # include <sys/xattr.h>
+# include <stdio.h>
 # define TRUE 		1
 # define FALSE		0
-#
+
 typedef struct		s_ls
 {
 	int				flag_l;
@@ -43,6 +44,12 @@ typedef struct		s_file
 	struct stat		*sstat;
 	char			*name;
 }					t_file;
+typedef struct		s_dir
+{
+	struct stat		*sstat;
+	char			*name;
+	char			*path;
+}					t_dir;
 typedef struct		s_display
 {
 	int				mode;
@@ -79,36 +86,36 @@ int					recursive_ls(t_ls *ls, char *path);
 /*
 ** display_result.c
 */
-int				display_results(t_ls *ls, t_list **lst, char *path);
+int					display_results(t_ls *ls, t_list **lst, char *path);
 
 /*
 ** formats.c
 */
-void			test_links(t_display *display, t_list *elem);
-void			test_owner(t_display *display, t_list *elem);
-void			test_group(t_display *display, t_list *elem);
-void			test_size(t_display *display, t_list *elem);
+void				test_links(t_display *display, t_list *elem);
+void				test_owner(t_display *display, t_list *elem);
+void				test_group(t_display *display, t_list *elem);
+void				test_size(t_display *display, t_list *elem);
 
 /*
 ** print_l
 */
-void			print_owner(uid_t uid, int max_size);
-void			print_group(gid_t gid, int max_size);
-void			print_size(off_t n, int max_size);
-void			print_date(struct stat *sstat);
-int				print_total(t_list *lst);
+void				print_owner(uid_t uid, int max_size);
+void				print_group(gid_t gid, int max_size);
+void				print_size(off_t n, int max_size);
+void				print_date(struct stat *sstat);
+int					print_total(t_list *lst);
 
 /*
 ** printl2
 */
-void			print_perm(mode_t chmod);
-void			print_links(nlink_t n, int max_size);
+void				print_perm(char *link, mode_t chmod);
+void				print_links(nlink_t n, int max_size);
 
 /*
 ** display_results2.c
 */
-int				file_cmp(t_file *c1, t_file *c2);
-int				time_cmp(t_file *c1, t_file *c2);
-void			init_display(t_display *display);
-void			find_len(t_list **lst, t_display *display);
+int					file_cmp(t_file *c1, t_file *c2);
+int					time_cmp(t_file *c1, t_file *c2);
+void				init_display(t_display *display);
+void				find_len(t_list **lst, t_display *display);
 #endif

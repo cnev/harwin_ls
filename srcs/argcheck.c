@@ -45,7 +45,14 @@ static int		detect_flags(char *flags, t_ls *info)
 		else if (flags[i] == 't')
 			info->flag_t = TRUE;
 		else
+		{
+			ft_putstr("/bin/ls: illegal option -- ");
+			ft_putchar(flags[i]);
+			ft_putchar('\n');
+			ft_putstr("> usage: ls [-ABCFGHLOPRSTUWabcdefghi");
+			ft_putendl("klmnopqrstuwx1] [file ...]");
 			return (-1);
+		}
 	}
 	return (0);
 }
@@ -66,11 +73,11 @@ static int		fetch_targets(t_ls *info, int ac, char **av, t_fifo **dirlst)
 			if (av[1][0] != '-')
 				push_fifo(dirlst, av[1]);
 			while (++i < ac)
-				{
-					if ((ac > 2 && av[1][0] != '-') || ac > 3)
-						info->mono = FALSE;
-					push_fifo(dirlst, av[i]);
-				}
+			{
+				if ((ac > 2 && av[1][0] != '-') || ac > 3)
+					info->mono = FALSE;
+				push_fifo(dirlst, av[i]);
+			}
 		}
 	}
 	return (0);

@@ -12,23 +12,56 @@
 
 #include "../includes/ls.h"
 
-static void		display_filedata(t_display *display, t_list *file)
+static char		*get_link(char *name, char *path)
+{
+	char			*filepath;
+	int				ret;
+	char			buf[5000];
+
+	filepath = ft_strjoin(ft_strjoin(path, "/"), name);
+	if ((ret = readlink(filepath, buf, 5000)) < 0)
+		return (NULL);
+	buf[ret] = 0;
+	return (ft_strdup(buf));
+}
+
+static void		print_readlink(char *link)
+{
+	if (!link)
+		ft_putchar('\n');
+	else
+	{
+		ft_putstr(" -> ");
+		ft_putendl(link);
+	}
+}
+
+static void		display_filedata(t_display *display, t_list *file, char *path)
 {
 	t_file			*data;
 	struct stat		*sstat;
+	char			*link;
 
 	data = file->data;
-	sstat = data->sstat;
-	print_perm(sstat->st_mode);
+	link = get_link(data->name, path);
+	//if (link != NULL)
+	//{
+	//	if (!(sstat = (struct stat *)malloc(sizeof(struct stat))))
+	//		exit(-1);
+	//	if (lstat(ft_strjoin(ft_strjoin(path, "/"), data->name), sstat) < 0)
+	//		return ;
+	//}
+	//else
+		sstat = data->sstat;
+	print_perm(link, sstat->st_mode);
 	print_links(sstat->st_nlink, display->links);
 	print_owner(sstat->st_uid, display->owner);
 	print_group(sstat->st_gid, display->group);
 	print_size(sstat->st_size, display->size);
 	print_date(sstat);
-	ft_putendl(data->name);
+	ft_putstr(data->name);
+	print_readlink(link);
 }
-
-
 
 static void		display_l(t_list **lst, char *path)
 {
@@ -38,8 +71,9 @@ static void		display_l(t_list **lst, char *path)
 
 	init_display(&display);
 	find_len(lst, &display);
-	stat(path, &sstat);
-	if (*lst)
+	if (stat(path, &sstat) < 0)
+		return ;
+	if (*lst && S_ISDIR(sstat.st_mode))
 	{
 		ft_putstr("total ");
 		ft_putnbr(print_total(*lst));
@@ -48,7 +82,7 @@ static void		display_l(t_list **lst, char *path)
 	tmp = *lst;
 	while (tmp)
 	{
-		display_filedata(&display, tmp);
+		display_filedata(&display, tmp, path);
 		tmp = tmp->next;
 	}
 }
@@ -63,6 +97,7 @@ static void		display_path(t_ls *ls, char *path)
 		ft_putendl(":");
 	}
 }
+
 int				display_results(t_ls *ls, t_list **lst, char *path)
 {
 	t_list			*tmp;

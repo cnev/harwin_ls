@@ -9,9 +9,10 @@
 /*   Updated: 2013/11/24 02:03:14 by cnev             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
-void		ft_lstiter(t_list *list, void(*f)(t_list *elem))
+void		ft_lstiter(t_list *list, void (*f)(t_list *elem))
 {
 	t_list		*cur;
 

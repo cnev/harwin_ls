@@ -9,6 +9,7 @@
 /*   Updated: 2013/11/19 15:04:04 by cnev             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 static int		ft_intlen(int n)
@@ -37,7 +38,8 @@ static char		*ft_testedge(int n)
 
 	if (n == -2147483648)
 	{
-		str = (char *)malloc(sizeof(char) * (12));
+		if (!(str = (char *)malloc(sizeof(char) * (12))))
+			return (NULL);
 		ft_strcpy(str, "-2147483648");
 		return (str);
 	}

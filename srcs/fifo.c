@@ -17,7 +17,7 @@ static t_fifo	*new_fifo(void *item)
 	t_fifo			*new;
 
 	if (!(new = (t_fifo *)malloc(sizeof(t_fifo))))
-		return (NULL);
+		exit(-1);
 	new->item = item;
 	new->next = NULL;
 	return (new);

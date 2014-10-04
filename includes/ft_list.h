@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_create_elem.c                                   :+:      :+:    :+:   */
+/*   ft_list.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vjung <vjung@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/09/09 15:29:26 by vjung             #+#    #+#             */
-/*   Updated: 2014/09/09 15:29:27 by vjung            ###   ########.fr       */
+/*   Created: 2014/09/09 15:29:42 by vjung             #+#    #+#             */
+/*   Updated: 2014/09/09 15:29:43 by vjung            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_list.h"
+#ifndef FT_LIST_H
+# define FT_LIST_H
+# include <stdlib.h>
 
-t_list			*ft_create_elem(void *data)
+typedef struct		s_list
 {
-	t_list			*elem;
+	struct s_list	*next;
+	void			*data;
+}					t_list;
 
-	if (!(elem = (t_list*)malloc(sizeof(t_list))))
-		exit(-1);
-	elem->data = data;
-	elem->next = NULL;
-	return (elem);
-}
+t_list				*ft_create_elem(void *data);
+void				ft_list_push_back(t_list **begin_list, void *data);
+void				ft_list_rsort(t_list **begin_list, int (*cmp)());
+void				ft_list_sort(t_list **begin_list, int (*cmp)());
+
+#endif

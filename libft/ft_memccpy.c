@@ -9,6 +9,7 @@
 /*   Updated: 2013/11/20 18:52:18 by cnev             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 void	*ft_memccpy(void *s1, const void *s2, int c, size_t n)

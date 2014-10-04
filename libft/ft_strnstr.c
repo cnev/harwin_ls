@@ -9,6 +9,7 @@
 /*   Updated: 2013/11/21 14:05:58 by cnev             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 char	*ft_strnstr(const char *s1, const char *s2, size_t n)

@@ -9,12 +9,14 @@
 /*   Updated: 2013/11/23 02:31:52 by cnev             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #ifndef LIBFT_H
 # define LIBFT_H
 # include "stdlib.h"
 # include "string.h"
 # include "unistd.h"
 # include "ctype.h"
+
 typedef struct		s_atoi
 {
 	int				i;
@@ -45,6 +47,7 @@ typedef struct		s_trim
 	char			*ps;
 	char			*out;
 }					t_trim;
+
 void				*ft_memset(void *b, int c, size_t len);
 void				ft_bzero(void *s, size_t n);
 void				*ft_memcpy(void *s1, const void *s2, size_t n);
@@ -99,4 +102,5 @@ void				ft_putendl_fd(const char *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
 int					ft_abs(int a);
 void				ft_str2free(char **tab);
+
 #endif

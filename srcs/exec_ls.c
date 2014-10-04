@@ -10,25 +10,47 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include <stdio.h>
 #include "../includes/ls.h"
 
-static int		ls_file(t_ls *ls, char *file)
+static char		*get_link(char *name, char *path)
 {
-	(void)ls;
-	ft_putendl(file);
-	return (0);
+	char			*filepath;
+	int				ret;
+	char			buf[5000];
+
+	filepath = ft_strjoin(ft_strjoin(path, "/"), name);
+	if ((ret = readlink(filepath, buf, 5000)) < 0)
+		return (NULL);
+	buf[ret] = 0;
+	return (ft_strdup(buf));
 }
 
 static t_file	*build_filedata(struct stat *sstat, char *name)
 {
 	t_file			*new;
 
-	new = (t_file *)malloc(sizeof(t_file));
+	if (!(new = (t_file *)malloc(sizeof(t_file))))
+		exit(-1);
 	new->sstat = sstat;
 	new->name = name;
 	return (new);
+}
+
+static int		ls_file(t_ls *ls, char *path)
+{
+	t_list			*lst;
+	char			*name;
+	struct stat		*sstat;
+
+	if (!(sstat = (struct stat *)malloc(sizeof(struct stat))))
+		exit(-1);
+	if (stat(path, sstat) < 0)
+		return (-1);
+	name = (ft_strrchr(path, '/')) == NULL ? path : ft_strrchr(path, '/');
+	lst = NULL;
+	ft_list_push_back(&lst, build_filedata(sstat, name));
+	display_results(ls, &lst, path);
+	return (0);
 }
 
 static int		fetch_filedata(t_ls *ls, t_list **lst, char *path,
@@ -36,12 +58,18 @@ static int		fetch_filedata(t_ls *ls, t_list **lst, char *path,
 {
 	struct stat		*sstat;
 	char			*file_path;
+	char			*link;
 
 	if (!(ls->flag_a) && dir->d_name[0] == '.')
 		return (0);
+	link = get_link(dir->d_name, path);
 	file_path = ft_strjoin(ft_strjoin(path, "/"), dir->d_name);
-	sstat = (struct stat *)malloc(sizeof(struct stat));
-	stat(file_path, sstat);
+	if (!(sstat = (struct stat *)malloc(sizeof(struct stat))))
+		exit(-1);
+	if (!link && stat(file_path, sstat) < 0)
+		return (-1);
+	else if (lstat(file_path, sstat) < 0)
+		return (-1);
 	ft_strdel(&file_path);
 	ft_list_push_back(lst, build_filedata(sstat, ft_strdup(dir->d_name)));
 	return (0);
@@ -52,30 +80,21 @@ int				ls_dir(t_ls *ls, char *path)
 	void			*dir;
 	struct dirent	*dir_name;
 	t_list			*lst;
+	char			*dirname;
 
+	dirname = ft_strrchr(path, '/');
 	lst = NULL;
+	if (dirname && dirname[1] == '.')
+	{
+		ls->first = TRUE;
+		recursive_ls(ls, path);
+		return (0);
+	}
 	if (!(dir = opendir(path)))
 		return (-1);
 	while ((dir_name = readdir(dir)))
-	{
 		fetch_filedata(ls, &lst, path, dir_name);
-	}
-	/*t_list *test = lst;
-	t_file *testfile;
-	printf("Current path: %s\n", path);
-	while (test)
-	{
-		testfile = test->data;
-		if (!ft_strcmp(testfile->name, ".")
-			|| !ft_strcmp(testfile->name, ".."))
-		{
-			test = test->next;
-			continue ;
-		}
-		printf("%s %lld\n", testfile->name, testfile->sstat->st_size);
-		test = test->next;
-	}
-	printf("\n");*/
+	closedir(dir);
 	display_results(ls, &lst, path);
 	if (ls->flag_rec)
 		recursive_ls(ls, path);
@@ -88,7 +107,6 @@ int				exec_ls(t_ls *ls)
 	struct stat		sstat;
 
 	tmp = ls->dirlst;
-
 	while (tmp)
 	{
 		if (ls->first)
