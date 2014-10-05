@@ -83,7 +83,8 @@ int				recursive_ls(t_ls *ls, char *path)
 		if (stat(filename, sstat) < 0)
 			continue ;
 		if (S_ISDIR(sstat->st_mode))
-			ft_list_push_back(&lst, build_dirdata(dir_name->d_name, filename, sstat));
+			ft_list_push_back(&lst,
+				build_dirdata(dir_name->d_name, filename, sstat));
 	}
 	closedir(dir);
 	return (recurse_list(ls, &lst));

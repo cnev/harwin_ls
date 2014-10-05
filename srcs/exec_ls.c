@@ -62,7 +62,6 @@ static int		fetch_filedata(t_ls *ls, t_list **lst, char *path,
 	return (0);
 }
 
-
 int				ls_dir(t_ls *ls, char *path)
 {
 	void			*dir;
