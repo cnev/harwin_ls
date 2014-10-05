@@ -7,6 +7,7 @@ SRC += $(SRCFOLDER)/argcheck.c
 SRC += $(SRCFOLDER)/display_results.c
 SRC += $(SRCFOLDER)/display_results2.c
 SRC += $(SRCFOLDER)/exec_ls.c
+SRC += $(SRCFOLDER)/exec_ls2.c
 SRC += $(SRCFOLDER)/fifo.c
 SRC += $(SRCFOLDER)/formats.c
 SRC += $(SRCFOLDER)/ft_create_elem.c
@@ -19,6 +20,7 @@ SRC += $(SRCFOLDER)/main.c
 SRC += $(SRCFOLDER)/print_l.c
 SRC += $(SRCFOLDER)/print_l2.c
 SRC += $(SRCFOLDER)/recursive_ls.c
+SRC += $(SRCFOLDER)/return_error.c
 OBJ = $(SRC:%.c=%.o)
 LIB = libft/
 

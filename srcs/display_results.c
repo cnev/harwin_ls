@@ -12,30 +12,6 @@
 
 #include "../includes/ls.h"
 
-static char		*get_link(char *name, char *path)
-{
-	char			*filepath;
-	int				ret;
-	char			buf[5000];
-
-	filepath = ft_strjoin(ft_strjoin(path, "/"), name);
-	if ((ret = readlink(filepath, buf, 5000)) < 0)
-		return (NULL);
-	buf[ret] = 0;
-	return (ft_strdup(buf));
-}
-
-static void		print_readlink(char *link)
-{
-	if (!link)
-		ft_putchar('\n');
-	else
-	{
-		ft_putstr(" -> ");
-		ft_putendl(link);
-	}
-}
-
 static void		display_filedata(t_display *display, t_list *file, char *path)
 {
 	t_file			*data;
@@ -44,15 +20,7 @@ static void		display_filedata(t_display *display, t_list *file, char *path)
 
 	data = file->data;
 	link = get_link(data->name, path);
-	//if (link != NULL)
-	//{
-	//	if (!(sstat = (struct stat *)malloc(sizeof(struct stat))))
-	//		exit(-1);
-	//	if (lstat(ft_strjoin(ft_strjoin(path, "/"), data->name), sstat) < 0)
-	//		return ;
-	//}
-	//else
-		sstat = data->sstat;
+	sstat = data->sstat;
 	print_perm(link, sstat->st_mode);
 	print_links(sstat->st_nlink, display->links);
 	print_owner(sstat->st_uid, display->owner);

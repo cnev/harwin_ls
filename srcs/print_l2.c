@@ -27,7 +27,7 @@ void			print_perm(char *link, mode_t chmod)
 	str[7] = chmod & S_IROTH ? 'r' : '-';
 	str[8] = chmod & S_IWOTH ? 'w' : '-';
 	str[9] = chmod & S_IXOTH ? 'x' : '-';
-	str[10] = !S_ISLNK(chmod) ? '@' : ' ';
+	str[10] = ' ';
 	str[11] = 0;
 	ft_putstr(str);
 	ft_putchar(' ');
@@ -51,4 +51,15 @@ void			print_links(nlink_t n, int max_size)
 		ft_putchar(' ');
 	ft_putnbr(n);
 	ft_putchar(' ');
+}
+
+void			print_readlink(char *link)
+{
+	if (!link)
+		ft_putchar('\n');
+	else
+	{
+		ft_putstr(" -> ");
+		ft_putendl(link);
+	}
 }

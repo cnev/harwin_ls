@@ -24,35 +24,39 @@ static int		zero_flags(t_ls *info)
 	return (0);
 }
 
+static int		set_flags(char flag, t_ls *info)
+{
+	if (flag == 'l')
+		info->flag_l = TRUE;
+	else if (flag == 'r')
+		info->flag_rev = TRUE;
+	else if (flag == 'a')
+		info->flag_a = TRUE;
+	else if (flag == 'R')
+		info->flag_rec = TRUE;
+	else if (flag == 't')
+		info->flag_t = TRUE;
+	else
+	{
+		ft_putstr("/bin/ls: illegal option -- ");
+		ft_putchar(flag);
+		ft_putchar('\n');
+		ft_putstr("> usage: ls [-ABCFGHLOPRSTUWabcdefghi");
+		ft_putendl("klmnopqrstuwx1] [file ...]");
+		return (-1);
+	}
+	return (0);
+}
+
 static int		detect_flags(char *flags, t_ls *info)
 {
 	int				i;
 
-	zero_flags(info);
-	if (flags[0] != '-')
-		return (0);
 	i = 0;
 	while (flags[++i])
 	{
-		if (flags[i] == 'l')
-			info->flag_l = TRUE;
-		else if (flags[i] == 'r')
-			info->flag_rev = TRUE;
-		else if (flags[i] == 'a')
-			info->flag_a = TRUE;
-		else if (flags[i] == 'R')
-			info->flag_rec = TRUE;
-		else if (flags[i] == 't')
-			info->flag_t = TRUE;
-		else
-		{
-			ft_putstr("/bin/ls: illegal option -- ");
-			ft_putchar(flags[i]);
-			ft_putchar('\n');
-			ft_putstr("> usage: ls [-ABCFGHLOPRSTUWabcdefghi");
-			ft_putendl("klmnopqrstuwx1] [file ...]");
-			return (-1);
-		}
+		if (set_flags(flags[i], info) < 0)
+			return (1);
 	}
 	return (0);
 }
@@ -60,38 +64,30 @@ static int		detect_flags(char *flags, t_ls *info)
 static int		fetch_targets(t_ls *info, int ac, char **av, t_fifo **dirlst)
 {
 	int				i;
+	int				flag_set;
 
-	i = 1;
-	if (ac == 1 || (ac == 2 && !ft_strcmp(av[1], ".")))
-		push_fifo(dirlst, ".");
-	else
+	flag_set = FALSE;
+	i = 0;
+	while (++i < ac)
 	{
-		if (ac == 2 && av[1][0] == '-')
-			push_fifo(dirlst, ".");
+		if (!flag_set && av[i][0] == '-')
+			detect_flags(av[i], info);
 		else
 		{
-			if (av[1][0] != '-')
-				push_fifo(dirlst, av[1]);
-			while (++i < ac)
-			{
-				if ((ac > 2 && av[1][0] != '-') || ac > 3)
-					info->mono = FALSE;
-				push_fifo(dirlst, av[i]);
-			}
+			flag_set = TRUE;
+			push_fifo(dirlst, av[i]);
 		}
 	}
+	if (!*dirlst)
+		push_fifo(dirlst, ".");
+	if ((*dirlst)->next)
+		info->mono = FALSE;
 	return (0);
 }
 
 int				read_command(int ac, char **av, t_ls *info)
 {
-	if (ac == 1)
-		zero_flags(info);
-	else
-	{
-		if ((detect_flags(av[1], info)) == -1)
-			return (-1);
-	}
+	zero_flags(info);
 	info->dirlst = NULL;
 	fetch_targets(info, ac, av, &(info->dirlst));
 	return (0);

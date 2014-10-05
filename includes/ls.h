@@ -79,6 +79,11 @@ int					exec_ls(t_ls *ls);
 int					ls_dir(t_ls *ls, char *path);
 
 /*
+** exec_ls2.c
+*/
+char				*get_link(char *name, char *path);
+
+/*
 ** recursive_ls.c
 */
 int					recursive_ls(t_ls *ls, char *path);
@@ -110,6 +115,7 @@ int					print_total(t_list *lst);
 */
 void				print_perm(char *link, mode_t chmod);
 void				print_links(nlink_t n, int max_size);
+void				print_readlink(char *link);
 
 /*
 ** display_results2.c
@@ -118,4 +124,10 @@ int					file_cmp(t_file *c1, t_file *c2);
 int					time_cmp(t_file *c1, t_file *c2);
 void				init_display(t_display *display);
 void				find_len(t_list **lst, t_display *display);
+
+/*
+** return_error.c
+*/
+int					return_error(char *str);
+
 #endif

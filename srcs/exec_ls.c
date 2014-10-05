@@ -12,19 +12,6 @@
 
 #include "../includes/ls.h"
 
-static char		*get_link(char *name, char *path)
-{
-	char			*filepath;
-	int				ret;
-	char			buf[5000];
-
-	filepath = ft_strjoin(ft_strjoin(path, "/"), name);
-	if ((ret = readlink(filepath, buf, 5000)) < 0)
-		return (NULL);
-	buf[ret] = 0;
-	return (ft_strdup(buf));
-}
-
 static t_file	*build_filedata(struct stat *sstat, char *name)
 {
 	t_file			*new;
@@ -75,6 +62,7 @@ static int		fetch_filedata(t_ls *ls, t_list **lst, char *path,
 	return (0);
 }
 
+
 int				ls_dir(t_ls *ls, char *path)
 {
 	void			*dir;
@@ -91,7 +79,7 @@ int				ls_dir(t_ls *ls, char *path)
 		return (0);
 	}
 	if (!(dir = opendir(path)))
-		return (-1);
+		return (return_error(path));
 	while ((dir_name = readdir(dir)))
 		fetch_filedata(ls, &lst, path, dir_name);
 	closedir(dir);
@@ -115,6 +103,7 @@ int				exec_ls(t_ls *ls)
 			ft_putchar('\n');
 		if (stat(tmp->item, &sstat) < 0)
 		{
+			return_error(tmp->item);
 			tmp = tmp->next;
 			continue ;
 		}
